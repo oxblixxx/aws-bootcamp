@@ -2,5 +2,5 @@
 
 
 # Create the cruddur logical diagram
-![Cruddur](_docs/assets/cloud.jpeg)
+![Cruddur](../_docs/assets/cloud.jpeg)
 @A
