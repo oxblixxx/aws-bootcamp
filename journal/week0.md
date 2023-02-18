@@ -2,4 +2,4 @@
 
 
 # Create the cruddur logical diagram
-![cruddur-digram](_docs/assets/Cloud Architecture.jpeg)
+![cruddur-digram](../../_docs/assets/Cloud Architecture.jpeg)
