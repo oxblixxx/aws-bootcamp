@@ -13,5 +13,33 @@
 ***
 
 # Setting up a billing alarm
-# Login to your aws account. On the console page click on the downward pointing triangle on the top right corner
+## step 1: Login to your aws account. On the console page click on the downward pointing triangle on the top right corner
 ![aws-console](assets/billing/billing_00.jpg)
+## step 2: A box appears, then click on "Billing Dashboard"
+![aws-console](assets/billing/billing_01.jpg)
+## step 3: Thereafter the AWS Billing Dashboard appears. On the left hand side, click "Budgets"
+![aws-console](assets/billing/billing_02.jpg)
+## step 3: Click on "Create a budget"
+![aws-console](assets/billing/billing_03.jpg)
+## step 4: We can use the AWS default template(simplified). Chooe Zero spend budget.
+![aws-console](assets/billing/billing_04.jpg)
+## step 5: Type in our preferred Budget name, Email recipients
+![aws-console](assets/billing/billing_05.jpg)
+## step 6: Then click on "Create Budget"
+![aws-console](assets/billing/billing_06.jpg)
+## step 7: Tadaaaaaa, we created our first Billing alarm, but we have gone beyond the threshold already
+![aws-console](assets/billing/billing_07.jpg)
+***
+# Create a AWS BUDGET
+## Follow steps above up to step 3
+## step 4: We can use AWS default template, choose Monthly Cost Budget
+![aws-console](assets/billing/billing_09.jpg)
+## step 5: Type in our preferred Budget Name, budgeted amount and email recipients
+![aws-console](assets/billing/billing_10.jpg)
+## Then Click Create Budget
+![aws-console](assets/billing/billing_11.jpg)
+
+
+
+
+
