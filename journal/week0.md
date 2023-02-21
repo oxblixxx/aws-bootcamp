@@ -43,7 +43,7 @@
 ## step 1: Login to your AWS console, on the searchbox type IAM then click enter
 ![aws-console](assets/billing/billing_00.jpg)
 ## step 2: Scroll down to the Access Keys section, click Create access keys
-![aws-console](assets/credentials/credentials_01.jpg)
+![aws-console](assets/Credentials/credentials_01.jpg)
 ## step 3: choose Command Line Interface(CLI)
 ![aws-console](assets/credentials/credentials_02.jpg)
 ## step 4: Confirm that you understand and click on Next
