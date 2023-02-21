@@ -14,4 +14,4 @@
 
 # Setting up a billing alarm
 # Login to your aws account. On the console page click on the downward pointing triangle on the top right corner
-![aws-console](../assets/billing/billing_00.jpg)
+![aws-console](assets/billing/billing_00.jpg)
