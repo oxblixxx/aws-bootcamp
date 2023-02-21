@@ -38,6 +38,30 @@
 ![aws-console](assets/billing/billing_10.jpg)
 ## Then Click Create Budget
 ![aws-console](assets/billing/billing_11.jpg)
+***
+# Generate AWS Credentials
+## step 1: Login to your AWS console, on the searchbox type IAM then click enter
+![aws-console](assets/billing/billing_00.jpg)
+## step 2: Scroll down to the Access Keys section, click Create access keys
+![aws-console](assets/credentials/credentials_01.jpg)
+## step 3: choose Command Line Interface(CLI)
+![aws-console](assets/credentials/credentials_02.jpg)
+## step 4: Confirm that you understand and click on Next
+![aws-console](assets/credentials/credentials_03.jpg)
+## step 5: It's best practices to put in a description value, then click Create Access Key
+![aws-console](assets/credentials/credentials_04.jpg)
+## step 6: You can decide to download the .csv file, click done
+![aws-console](assets/credentials/credentials_06.jpg)
+***
+
+
+
+
+
+
+
+
+
 
 
 
