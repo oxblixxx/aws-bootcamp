@@ -97,5 +97,25 @@ sudo apt update -y && sudo apt upgrade -y
 ```
 then we need to install **DOCKER** on our machine with the command
 ```
+sudo apt install docker -y
+```
+to check if docker is installed run
 
 ```
+docker --version
+```
+![docker install image](assets/docker/docker-install.jpg)
+
+
+we are going to be pulling the nginx container from dockerhub
+run the command
+```
+sudo docker pull nginx
+```
+
+![docker install image](assets/docker/docker-pull.jpg).
+
+I understand I have my private key exposed, I deleted the instance immediately.
+
+##
+
