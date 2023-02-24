@@ -72,3 +72,5 @@ docker login
 
 put in your credentials. If correct it should log you in succesfully
 ![docker login success](assets/docker/docker-login.jpg)
+
+then return to the browser you have your dockerhub logged in, create a repo [here is my repo link](https://hub.docker.com/repository/docker/oxblixxx/backend-flask/general)
