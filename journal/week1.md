@@ -55,3 +55,5 @@ in the directory of the script file run:
 the script builds the image then runs it.
 
 ![image of the script running](assets/docker/script.jpg)
+
+I repeated the same process in the frontend-react-js directory
