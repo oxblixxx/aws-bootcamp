@@ -2,6 +2,7 @@
 
 ## Homework challenge
 
+***
 ## Run the dockerfile as a script
 I firstly created the Dockerfile in the backend-flask directory, here is the code:
 ```Dockerfile
@@ -58,7 +59,7 @@ the script builds the image then runs it.
 
 I repeated the same process in the frontend-react-js directory
 
-
+***
 ## Push an Image to dockerhub
 Prior before now, I had a dockerhub account but I haven't pushed to the hub before.
 
@@ -86,6 +87,7 @@ docker push oxblixxx/backend-flask:1.0
 
 ![docker push](assets/docker/docker-push.jpg)
 
+***
 
 ## Create an EC2 instance, have docker installed and pull a container
 login to your aws console.
@@ -117,5 +119,15 @@ sudo docker pull nginx
 
 I understand I have my private key exposed, I deleted the instance immediately.
 
-##
+***
+## Research best docker practices
+for this task, I asked **ChatGPT** "What are the best practices of a dockerfile" then I implemented them in the docker file above which are:
+1. I used official image python
+2. Document the Dockerfile by putting comments where necessary
+3. used environment variables
+4. use the correct commands
+5. clean up unnecessary files before exiting.
 
+![best-practice](assets/docker/best-practice.jpg)
+
+***
