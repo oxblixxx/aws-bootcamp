@@ -51,7 +51,7 @@ chmod +x <name of the file>.sh
 in the directory of the script file run:
 ```
 ./<name of the file>.sh
-
+```
 the script builds the image then runs it.
 
 ![image of the script running](assets/docker/script.jpg)
