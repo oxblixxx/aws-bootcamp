@@ -57,3 +57,17 @@ the script builds the image then runs it.
 ![image of the script running](assets/docker/script.jpg)
 
 I repeated the same process in the frontend-react-js directory
+
+
+## Push an Image to dockerhub
+Prior before now, I had a dockerhub account but I haven't pushed to the hub before.
+
+If you don't have a Dockerhub account create one [here](https://hub.docker.com)
+
+return to your terminal, run
+
+```
+docker login
+```
+
+put in your credentials. If correct it should log you in succesfully
