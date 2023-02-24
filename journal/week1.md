@@ -84,4 +84,6 @@ then I ran the below command to push
 docker push oxblixxx/backend-flask:1.0
 ```
 
+![docker push](assets/docker/docker-push.jpg)
+
 
