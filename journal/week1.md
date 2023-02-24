@@ -71,3 +71,4 @@ docker login
 ```
 
 put in your credentials. If correct it should log you in succesfully
+![docker login success](assets/docker/docker-login.jpg)
