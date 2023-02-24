@@ -87,3 +87,15 @@ docker push oxblixxx/backend-flask:1.0
 ![docker push](assets/docker/docker-push.jpg)
 
 
+## Create an EC2 instance, have docker installed and pull a container
+login to your aws console.
+Then launch and EC2 instance in your preferred region. Connect to the Instance by SSH. I used the EC2 instance connect for ease
+run this command to update your instance
+
+```
+sudo apt update -y && sudo apt upgrade -y
+```
+then we need to install **DOCKER** on our machine with the command
+```
+
+```
