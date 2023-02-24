@@ -74,3 +74,14 @@ put in your credentials. If correct it should log you in succesfully
 ![docker login success](assets/docker/docker-login.jpg)
 
 then return to the browser you have your dockerhub logged in, create a repo [here is my repo link](https://hub.docker.com/repository/docker/oxblixxx/backend-flask/general)
+
+then I returned to my terminal to run this command to tag the image firstly
+```
+docker tag backendflask-image:1.0 oxblixxx/backend-flask:1.0
+```
+then I ran the below command to push
+```
+docker push oxblixxx/backend-flask:1.0
+```
+
+
