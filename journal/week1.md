@@ -131,3 +131,74 @@ for this task, I asked **ChatGPT** "What are the best practices of a dockerfile"
 ![best-practice](assets/docker/best-practice.jpg)
 
 ***
+
+## Docker multi-stage build
+I had no prior knowledge about docker multi-stage build, made research on ChatGPT. Merged both contents from my dockerfile in the backend-flask directory and the 
+frontend-react-js directory. Then I got a NPM error
+
+```
+npm ERR! code ENOENT
+npm ERR! syscall open
+npm ERR! path /frontend-react-js/package.json
+npm ERR! errno -2
+npm ERR! enoent ENOENT: no such file or directory, open '/frontend-react-js/package.json'
+npm ERR! enoent This is related to npm not being able to find a file.
+npm ERR! enoent 
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2023-03-01T02_20_22_280Z-debug-0.log
+```
+Then I updated the COPY command in my dockerfile
+
+```
+COPY frontend-react-js/package.json frontend-react-js/package-lock.json ./
+COPY frontend-react-js/src ./src/
+COPY frontend-react-js/public ./public/
+```
+
+here is my final code
+
+```
+# Build backend
+FROM python:3.10-slim-buster AS builder-backend
+
+WORKDIR /backend-flask
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV FLASK_ENV=development
+
+EXPOSE ${PORT}
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
+
+# Build frontend
+FROM node:16.18 AS builder-frontend
+
+WORKDIR /frontend-react-js
+
+COPY frontend-react-js/package.json frontend-react-js/package-lock.json ./
+RUN npm install
+COPY frontend-react-js/src ./src/
+COPY frontend-react-js/public ./public/
+
+ENV PORT=3000
+
+EXPOSE ${PORT}
+CMD ["npm", "start"]
+
+# Combine backend and frontend
+FROM python:3.10-slim-buster
+
+COPY --from=builder-backend /backend-flask /backend-flask
+COPY --from=builder-frontend /frontend-react-js /frontend-react-js
+
+EXPOSE ${PORT}
+
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=4567"]
+
+```
+
+Now it worked smoothly
