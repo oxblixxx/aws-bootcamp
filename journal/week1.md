@@ -224,7 +224,7 @@ The **Depends_on,** configuration ensures that the backend service is started be
       - backend-flask
 ```
 
-here is the complete code depends_on:
+here is the complete code:
 ```
  version: "3.8"
 services:
