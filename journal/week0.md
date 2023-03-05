@@ -99,6 +99,25 @@ step 6: You can decide to download the .csv file, click done
 ***
 
 
+##  Install AWS CLI
+To install AWS on CLI run
+
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws configure
+```
+input the generated IAM user credentials after the prompt when you run AWS CONFIGURE. To confirm if the user is authenticated, run
+
+```
+aws sts get-caller-identity
+```
+
+
+
+
+
 
 
 
