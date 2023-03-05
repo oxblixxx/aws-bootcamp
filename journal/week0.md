@@ -10,10 +10,10 @@ For the Week 0, I learnt quite a number of things.
 ## Create the cruddur logical diagram
 ![Cruddur](../_docs/assets/cloud.jpeg)
 
-The above architectural diagram is the Cruddur app diagram
+The above architectural diagram is the Cruddur app diagram. Here is the link to view my [logical diagram](https://lucid.app/lucidchart/c31a6be1-a916-4bea-96d9-4aac9027ebff/edit)
 
-### Below is a napkin diagram of a vpc with two public public subnets and two private subnets, with NATs gateways in the public 
-### subnets and a load balancer to regulate traffic
+Below is a napkin diagram of a vpc with two public public subnets and two private subnets, with NATs gateways in the public subnets and a load balancer to regulate traffic
+![napkin-design](assets/napkin.jpg)
 
 ***
 
