@@ -171,7 +171,7 @@ $ docker ps
 signup for [snyk](https://snyk.io/)
 
 Generate an api key, click on your avatar at bottom left corner >>  account settings >> auth token >> click to show
-
+![auth-token](assets/docker/snyk-1.jpg)
 
 
 install snyk on the CLI [check](https://docs.snyk.io/snyk-cli/install-the-snyk-cli)
@@ -188,7 +188,9 @@ then authenticate
  ```
  snyk monitor
  ```
- to check for vulnerabilities
+ ![synk-monitor](assets/docker/snyk-monitor.jpg)
+
+to check for vulnerabilities
  
  ```
  synk container test <container name>
