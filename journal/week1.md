@@ -138,17 +138,17 @@ $ sudo groupadd dockerusers
 create users for the group
 
 ```
-$ sudo adduser oxblixxx
+$ sudo adduser $user
 ```
 add user to the group created
 
 ```
-$ sudo usermod -aG dockerusers oxblixxx
+$ sudo usermod -aG dockerusers $user
 ```
 
 change ownership of docker binary
 ```
-$ sudo chown root:dockerusers /usr/bin/docker*
+$ sudo chown $user:dockerusers /usr/bin/docker*
 ```
 
 change permission of docker binary files
@@ -162,13 +162,33 @@ $ sudo systemctl restart docker
 ```
 switch to the docker user
 ```
-$ sudo su oxblixxx
+$ sudo su $user
 ```
 test docker commands
 ```
 $ docker ps
 ```
-It will required me to put sudo before running the docker commands
+signup for [snyk](https://snyk.io/)
+
+Generate an api key, click on your avatar at bottom left corner >>  account settings >> auth token >> click to show
+
+install snyk on the CLI [check](https://docs.snyk.io/snyk-cli/install-the-snyk-cli)
+```
+npm install snyk -g
+```
+then authenticate
+ 
+ ```
+ snyk auth <api key>
+ ```
+ 
+ confirm it succesfully authenticated with 
+ ```
+ snyk monitor
+ ```
+ 
+ 
+ 
 
 ![best-practice](assets/docker/best-practice.jpg)
 
