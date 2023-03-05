@@ -190,18 +190,13 @@ then authenticate
  ```
  ![synk-monitor](assets/docker/snyk-monitor.jpg)
 
-to check for vulnerabilities
+ to check for vulnerabilities
  
  ```
  synk container test <container name>
  ```
  ![synk-vulnerability](assets/docker/vulnerability.jpg)
  
- 
- 
- 
-
-![best-practice](assets/docker/best-practice.jpg)
 
 ***
 
