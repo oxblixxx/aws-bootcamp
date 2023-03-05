@@ -122,11 +122,53 @@ I understand I have my private key exposed, I deleted the instance immediately.
 ***
 ## Research best docker practices
 for this task, I asked **ChatGPT** "What are the best practices of a dockerfile" then I implemented them in the docker file above which are:
-1. I used official image python
+1. ensured to use official images
 2. Document the Dockerfile by putting comments where necessary
 3. used environment variables
 4. use the correct commands
 5. clean up unnecessary files before exiting.
+
+6. container should run in non-root user mode.
+
+create a new group to run the container
+
+```
+$ sudo groupadd dockerusers
+```
+create users for the group
+
+```
+$ sudo adduser oxblixxx
+```
+add user to the group created
+
+```
+$ sudo usermod -aG dockerusers oxblixxx
+```
+
+change ownership of docker binary
+```
+$ sudo chown root:dockerusers /usr/bin/docker*
+```
+
+change permission of docker binary files
+```
+$ sudo chmod 750 /usr/bin/docker*
+```
+
+restart the docker daemon
+```
+$ sudo systemctl restart docker
+```
+switch to the docker user
+```
+$ sudo su oxblixxx
+```
+test docker commands
+```
+$ docker ps
+```
+It will required me to put sudo before running the docker commands
 
 ![best-practice](assets/docker/best-practice.jpg)
 
