@@ -114,6 +114,8 @@ input the generated IAM user credentials after the prompt when you run AWS CONFI
 aws sts get-caller-identity
 ```
 
+![cli-install](Credentials/aws-configure.jpg)
+
 
 
 
