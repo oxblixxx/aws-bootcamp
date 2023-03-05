@@ -172,6 +172,8 @@ signup for [snyk](https://snyk.io/)
 
 Generate an api key, click on your avatar at bottom left corner >>  account settings >> auth token >> click to show
 
+
+
 install snyk on the CLI [check](https://docs.snyk.io/snyk-cli/install-the-snyk-cli)
 ```
 npm install snyk -g
@@ -186,6 +188,13 @@ then authenticate
  ```
  snyk monitor
  ```
+ to check for vulnerabilities
+ 
+ ```
+ synk container test <container name>
+ ```
+ ![synk-vulnerability](assets/docker/vulnerability.jpg)
+ 
  
  
  
