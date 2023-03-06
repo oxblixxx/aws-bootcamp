@@ -8,8 +8,10 @@ tasks:
       unzip awscliv2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
-      cd /frontend-react-js
+      cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js
       npm i install
+      cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js
+      npm install --save honeycomb-beeline
   - name: postgres
     init: |
       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
