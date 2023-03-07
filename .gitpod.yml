@@ -11,7 +11,12 @@ tasks:
       cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js
       npm i install
       cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js
-      npm install --save honeycomb-beeline
+      npm install --save \
+          @opentelemetry/api \
+          @opentelemetry/sdk-trace-web \
+          @opentelemetry/exporter-trace-otlp-http \
+          @opentelemetry/context-zone
+                      
   - name: postgres
     init: |
       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
