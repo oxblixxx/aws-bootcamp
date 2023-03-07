@@ -5,9 +5,9 @@ import { Resource }  from '@opentelemetry/resources';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
 // for http request
-import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request';
-import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
+// import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request';
+// import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
+// import { registerInstrumentations } from '@opentelemetry/instrumentation';
 
 
 const exporter = new OTLPTraceExporter({
@@ -24,18 +24,18 @@ provider.register({
 });
 
 
-registerInstrumentations({
-  instrumentations: [
-    new XMLHttpRequestInstrumentation({
-      propagateTraceHeaderCorsUrls: [
-         new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g')
-      ]
-    }),
-    new FetchInstrumentation({
-      propagateTraceHeaderCorsUrls: [
-        new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g') 
-      ]
-    }),
-    new UserInteractionInstrumentation(),
-  ],
-});
+// registerInstrumentations({
+//   instrumentations: [
+//     new XMLHttpRequestInstrumentation({
+//       propagateTraceHeaderCorsUrls: [
+//          new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g')
+//       ]
+//     }),
+//     new FetchInstrumentation({
+//       propagateTraceHeaderCorsUrls: [
+//         new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g') 
+//       ]
+//     }),
+//     new UserInteractionInstrumentation(),
+//   ],
+// });
