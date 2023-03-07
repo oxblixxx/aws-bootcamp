@@ -56,13 +56,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
   return (
     <>
       <RouterProvider router={router} />
     </>
   );
 }
-
 export default App;
