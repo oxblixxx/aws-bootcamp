@@ -1,6 +1,5 @@
 import './App.css';
 
-import { startRequestTrace, finishRequestTrace } from './honeycomb';
 import HomeFeedPage from './pages/HomeFeedPage';
 import NotificationFeedPage from './pages/NotificationsFeedPage';
 import UserFeedPage from './pages/UserFeedPage';
@@ -16,18 +15,6 @@ import {
   RouterProvider
 } from "react-router-dom";
 
-
-const span = startRequestTrace('https://my-backend-api.com/data', 'GET');
-fetch('https://my-backend-api.com/data')
-  .then(response => response.json())
-  .then(data => {
-    finishRequestTrace(span);
-    // Process the data
-  })
-  .catch(error => {
-    finishRequestTrace(span, error);
-    // Handle the error
-  });
   
 const router = createBrowserRouter([
   {
@@ -69,6 +56,8 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
   return (
     <>
       <RouterProvider router={router} />
