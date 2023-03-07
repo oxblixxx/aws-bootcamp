@@ -1,30 +1,18 @@
-import { Honeycomb } from 'honeycomb-beeline';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { WebTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trace-web';
+import { ZoneContextManager } from '@opentelemetry/context-zone';
+import { Resource }  from '@opentelemetry/resources';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 
-Honeycomb({
-  writeKey: process.env.HONEYCOMB_API_KEY,
-  dataset: process.env.HONEYCOMB_DATASET,
-  serviceName: 'my-frontend-app'
+const exporter = new OTLPTraceExporter({
+  url: 'https://<your collector endpoint>:443/v1/traces'
 });
-
-function startRequestTrace(url, method) {
-  const span = Honeycomb.startTrace({
-    name: `${method} ${url}`,
-    'http.url': url,
-    'http.method': method
-  });
-
-  return span;
-}
-
-function finishRequestTrace(span, error) {
-  if (error) {
-    Honeycomb.finishTrace(span, { error });
-  } else {
-    Honeycomb.finishTrace(span);
-  }
-}
-
-export {
-  startRequestTrace,
-  finishRequestTrace
-};
+const provider = new WebTracerProvider({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'browser',
+  }),
+});
+provider.addSpanProcessor(new BatchSpanProcessor(exporter));
+provider.register({
+  contextManager: new ZoneContextManager()
+});
