@@ -57,3 +57,31 @@ RequestsInstrumentor().instrument()
  ```
  
  
+## Instrument AWS X-Ray into backend flask application
+
+add to requirements.txt
+ 
+```
+aws-xray-sdk
+```
+
+to install the dependencies then run
+
+```
+pip install -r requirements.txt
+```
+
+cd into backend-flask/app.py, add the below code
+```
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
+```
+
+
+
+
+  
