@@ -77,7 +77,7 @@ from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 ```
 
@@ -100,6 +100,12 @@ then put in aws/json/xray.json the below
   }
 }
 ```
+paste this code in your terminal, it should return a json if succesful
 
+```
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"$backend-flask\")"
+```
 
   
