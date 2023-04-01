@@ -107,7 +107,7 @@ in your terminal paste the below code, show return a json if succesful
 FLASK_ADDRESS="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
 aws xray create-group \
    --group-name "Cruddur" \
-   --filter-expression "service(\"$backend-flask\")"
+   --filter-expression "service(\"backend-flask\")"
 ```
 ```
 aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
@@ -118,6 +118,12 @@ Install and start the xray demon
 ```
  wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
  sudo dpkg -i **.deb
+```
+
+Just incase you come against this authentication error in Xray daemon logs, create a .env with your credentials in the directory your docker-compose is located 
+
+```
+NoCredentialProviders: no valid providers in chain. Deprecated. For verbose messaging see aws.Config.CredentialsChainVerboseErrors
 ```
 
   
