@@ -101,5 +101,16 @@ then put in aws/json/xray.json the below
 }
 ```
 
+in your terminal paste the below code, show return a json if succesful
+
+```
+FLASK_ADDRESS="https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"$backend-flask\") {fault OR error}"
+```
+```
+aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
+```
 
   
