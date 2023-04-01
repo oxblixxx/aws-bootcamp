@@ -91,7 +91,7 @@ then put in aws/json/xray.json the below
       "Priority": 9000,
       "FixedRate": 0.1,
       "ReservoirSize": 5,
-      "ServiceName": "Cruddur",
+      "ServiceName": "backend-flask",
       "ServiceType": "*",
       "Host": "*",
       "HTTPMethod": "*",
