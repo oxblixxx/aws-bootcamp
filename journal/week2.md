@@ -126,4 +126,63 @@ Just incase you come against this authentication error in Xray daemon logs, crea
 NoCredentialProviders: no valid providers in chain. Deprecated. For verbose messaging see aws.Config.CredentialsChainVerboseErrors
 ```
 
+
+
+## Cloudwatch Logs
+update ~/backend-flask/requirements.txt; add
+
+```
+watchtower
+```
+
+cd into app.py; paste the below
+
+```
+# Cloudwatch logs
+import watchtower
+import logging
+from time import strftime
+
+# Configuring Logger to Use CloudWatch
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+LOGGER.addHandler(console_handler)
+LOGGER.addHandler(cw_handler)
+LOGGER.info("HomeActivities")
+```
+
+```
+@app.after_request
+def after_request(response):
+    timestamp = strftime('[%Y-%b-%d %H:%M]')
+    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    return response
+```
+
+then cd into your docker-compose file; add to env variables to access AWS
+
+```
+  AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+```
+cd into ~/backend-flask/services/home_activities.py; add the below
+
+```
+Logger.info("HomeActivities")
+```
+
+in app.py, update the API Endpoint as this
+
+```
+  data = HomeActivities.run(Logger=LOGGER)
+```
+
+Login into your AWS Console, search for CLOUDWATCH LOGS, check Log groups for home activities Log streams
+
+
+
+
   
