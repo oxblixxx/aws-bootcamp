@@ -2,6 +2,8 @@
 
 ## Class Summary
 
+
+
 ## Instrument our backend flask application to use Open Telemetry (OTEL) with Honeycomb as the provider
 
  Signup an account on Honeycomb, [click here](https://ui.honeycomb.io/signup).
@@ -183,6 +185,18 @@ in app.py, update the API Endpoint as this
 Login into your AWS Console, search for CLOUDWATCH LOGS, check Log groups for home activities Log streams
 
 
+
+## Interagate ROLLBAR FOR LOGGING
+sign up for [a Rollbar account](https://rollbar.com)
+
+create a project "Cruddur"
+
+cd into ~/backend-flask/requirements.txt; add Rollbar python dependecies
+
+```
+blinker
+rollbar
+```
 
 
   
