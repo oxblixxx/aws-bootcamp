@@ -4,8 +4,8 @@ receivers:
       http: # port 4318
         cors:
           allowed_origins:
-            - ${FRONTEND_URL_HTTPS}
-            - ${FRONTEND_URL_HTTP}
+            - https://*
+            - http://*
 
 processors:
   batch:
