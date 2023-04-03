@@ -189,14 +189,67 @@ Login into your AWS Console, search for CLOUDWATCH LOGS, check Log groups for ho
 ## Interagate ROLLBAR FOR LOGGING
 sign up for [a Rollbar account](https://rollbar.com)
 
-create a project "Cruddur"
+create a project "Cruddur" and create an integration for flask, copy the access token
 
-cd into ~/backend-flask/requirements.txt; add Rollbar python dependecies
+cd into ~/backend-flask/requirements.txt; add Rollbar python dependecies and run pip install -r requrements.txt
 
 ```
 blinker
 rollbar
 ```
+
+create a .env file, add ROLLBAR ACCESS TOKEN
+
+```
+ ROLLBAR_ACCESS_TOKEN=""
+``
+Add to docker-compose for Rollbar
+
+```
+ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
+```
+cd into ~/backend-flask/app.py. Update it with the below code
+
+```
+import os
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
+```
+
+```
+rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+@app.before_first_request
+def init_rollbar():
+    """init rollbar module"""
+    rollbar.init(
+        # access token
+        rollbar_access_token,
+        # environment name
+        'production',
+        # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+```
+Here is an API endpoint to test for rollbar, should be in app.py as well
+
+```
+@app.route('/rollbar/test')
+def rollbar_test():
+    rollbar.report_message('Hello World!', 'warning')
+    return "Hello World!"
+```
+
+    
+    
+
+
+
+
 
 
   
