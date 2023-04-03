@@ -18,8 +18,8 @@ tasks:
           @opentelemetry/context-zone
           @opentelemetry/instrumentation \
           @opentelemetry/instrumentation-xml-http-request \
-          @opentelemetry/instrumentation-fetch
-
+          @opentelemetry/instrumentation-fetch \
+          @npm i aws-amplify
 
 
   - name: postgres
