@@ -202,7 +202,7 @@ create a .env file, add ROLLBAR ACCESS TOKEN
 
 ```
  ROLLBAR_ACCESS_TOKEN=""
-``
+```
 Add to docker-compose for Rollbar
 
 ```
@@ -236,6 +236,7 @@ def init_rollbar():
     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 ```
 Here is an API endpoint to test for rollbar, should be in app.py as well
+
 
 ```
 @app.route('/rollbar/test')
