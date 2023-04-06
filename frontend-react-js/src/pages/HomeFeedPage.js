@@ -11,7 +11,7 @@ import ReplyForm from '../components/ReplyForm';
 import { Auth } from 'aws-amplify';
 
 // [TODO] Authenication
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 //Honeycomb Tracing
 import { trace, context, } from '@opentelemetry/api';
