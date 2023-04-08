@@ -22,7 +22,7 @@ export default function SignupPage() {
     setErrors('')
     try {
         const { user } = await Auth.signUp({
-          username: email,
+          username: username,
           password: password,
           attributes: {
               name: name,
