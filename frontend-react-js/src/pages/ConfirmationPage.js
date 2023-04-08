@@ -2,9 +2,9 @@ import './ConfirmationPage.css';
 import React from "react";
 import { useParams } from 'react-router-dom';
 import {ReactComponent as Logo} from '../components/svg/logo.svg';
-import { Auth } from 'aws-amplify';
+
 // [TODO] Authenication
-// import Cookies from 'js-cookie'
+import { Auth } from 'aws-amplify';
 
 export default function ConfirmationPage() {
   const [email, setEmail] = React.useState('');
@@ -39,7 +39,7 @@ export default function ConfirmationPage() {
       }
     }
   }
-  
+
   const onsubmit = async (event) => {
     event.preventDefault();
     setErrors('')
@@ -51,9 +51,6 @@ export default function ConfirmationPage() {
     }
     return false
   }
-
-
-  
 
   let el_errors;
   if (errors){
