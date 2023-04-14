@@ -1,115 +1,112 @@
-import './HomeFeedPage.css';
+import './ConfirmationPage.css';
 import React from "react";
-
-
-import DesktopNavigation  from '../components/DesktopNavigation';
-import DesktopSidebar     from '../components/DesktopSidebar';
-import ActivityFeed from '../components/ActivityFeed';
-import ActivityForm from '../components/ActivityForm';
-import ReplyForm from '../components/ReplyForm';
-
-import { Auth } from 'aws-amplify';
+import { useParams } from 'react-router-dom';
+import {ReactComponent as Logo} from '../components/svg/logo.svg';
 
 // [TODO] Authenication
-import Cookies from 'js-cookie'
+import { Auth } from 'aws-amplify';
 
-//Honeycomb Tracing
-import { trace, context, } from '@opentelemetry/api';
-const tracer = trace.getTracer();
+export default function ConfirmationPage() {
+  const [email, setEmail] = React.useState('');
+  const [code, setCode] = React.useState('');
+  const [errors, setErrors] = React.useState('');
+  const [codeSent, setCodeSent] = React.useState(false);
 
-export default function HomeFeedPage() {
-  const [activities, setActivities] = React.useState([]);
-  const [popped, setPopped] = React.useState(false);
-  const [poppedReply, setPoppedReply] = React.useState(false);
-  const [replyActivity, setReplyActivity] = React.useState({});
-  const [user, setUser] = React.useState(null);
-  const dataFetchedRef = React.useRef(false);
+  const params = useParams();
 
-  const loadData = async () => {
+  const code_onchange = (event) => {
+    setCode(event.target.value);
+  }
+  const email_onchange = (event) => {
+    setEmail(event.target.value);
+  }
+
+  const resend_code = async (event) => {
+    setErrors('')
     try {
-      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
-      var startTime = performance.now() //capture start time
-      const res = await fetch(backend_url, {
-        method: "GET"
-      });
-      var endTime = performance.now() //capture when result was returned
-      let resJson = await res.json();
-      if (res.status === 200) {
-        setActivities(resJson)
-      //Start custom span
-      tracer.startActiveSpan('HomeFeedPageLoadSpan', hmfSpan => {
-        // Add attributes to custom span
-        hmfSpan.setAttribute('homeeFeedPage.latency_MS', (endTime - startTime)); //Latency in milliseconds
-        hmfSpan.setAttribute('homeeFeedPage.status', true); //status of the item retrieved
-        hmfSpan.end();
-      });        
-      } else {
-        console.log(res)
-         // same as above but for when the response isnt a success
-         tracer.startActiveSpan('HomeFeedPageLoadSpan', hmfSpan => {
-          hmfSpan.setAttribute('homeeFeedPage.latency_MS', (endTime - startTime));
-          hmfSpan.setAttribute('homeeFeedPage.status', false);
-          hmfSpan.end();
-        });
-      }
+      await Auth.resendSignUp(email);
+      console.log('code resent successfully');
+      setCodeSent(true)
     } catch (err) {
-      console.log(err);
+      // does not return a code
+      // does cognito always return english
+      // for this to be an okay match?
+      console.log(err)
+      if (err.message == 'Username cannot be empty'){
+        setCognitoErrors("You need to provide an email in order to send Resend Activiation Code")   
+      } else if (err.message == "Username/client id combination not found."){
+        setCognitoErrors("Email is invalid or cannot be found.")   
+      }
     }
-  };
+  }
 
-  // check if we are authenicated
-const checkAuth = async () => {
-  Auth.currentAuthenticatedUser({
-    // Optional, By default is false. 
-    // If set to true, this call will send a 
-    // request to Cognito to get the latest user data
-    bypassCache: false 
-  })
-  .then((user) => {
-    console.log('user',user);
-    return Auth.currentAuthenticatedUser()
-  }).then((cognito_user) => {
-      setUser({
-        display_name: cognito_user.attributes.name,
-        handle: cognito_user.attributes.preferred_username
-      })
-  })
-  .catch((err) => console.log(err));
-};
+  const onsubmit = async (event) => {
+    event.preventDefault();
+    setErrors('')
+    try {
+      await Auth.confirmSignUp(email, code);
+      window.location.href = "/"
+    } catch (error) {
+      setErrors(error.message)
+    }
+    return false
+  }
+
+  let el_errors;
+  if (errors){
+    el_errors = <div className='errors'>{errors}</div>;
+  }
+
+
+  let code_button;
+  if (codeSent){
+    code_button = <div className="sent-message">A new activation code has been sent to your email</div>
+  } else {
+    code_button = <button className="resend" onClick={resend_code}>Resend Activation Code</button>;
+  }
 
   React.useEffect(()=>{
-    //prevents double call
-    if (dataFetchedRef.current) return;
-    dataFetchedRef.current = true;
-
-    loadData();
-    checkAuth();
+    if (params.email) {
+      setEmail(params.email)
+    }
   }, [])
 
   return (
-    <article>
-      <DesktopNavigation user={user} active={'home'} setPopped={setPopped} />
-      <div className='content'>
-        <ActivityForm  
-          popped={popped}
-          setPopped={setPopped} 
-          setActivities={setActivities} 
-        />
-        <ReplyForm 
-          activity={replyActivity} 
-          popped={poppedReply} 
-          setPopped={setPoppedReply} 
-          setActivities={setActivities} 
-          activities={activities} 
-        />
-        <ActivityFeed 
-          title="Home" 
-          setReplyActivity={setReplyActivity} 
-          setPopped={setPoppedReply} 
-          activities={activities} 
-        />
+    <article className="confirm-article">
+      <div className='recover-info'>
+        <Logo className='logo' />
       </div>
-      <DesktopSidebar user={user} />
+      <div className='recover-wrapper'>
+        <form
+          className='confirm_form'
+          onSubmit={onsubmit}
+        >
+          <h2>Confirm your Email</h2>
+          <div className='fields'>
+            <div className='field text_field email'>
+              <label>Email</label>
+              <input
+                type="text"
+                value={email}
+                onChange={email_onchange} 
+              />
+            </div>
+            <div className='field text_field code'>
+              <label>Confirmation Code</label>
+              <input
+                type="text"
+                value={code}
+                onChange={code_onchange} 
+              />
+            </div>
+          </div>
+          {el_errors}
+          <div className='submit'>
+            <button type='submit'>Confirm Email</button>
+          </div>
+        </form>
+      </div>
+      {code_button}
     </article>
   );
 }
