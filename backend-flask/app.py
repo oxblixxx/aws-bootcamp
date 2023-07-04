@@ -93,22 +93,22 @@ def after_request(response):
     LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
     return response
 
-rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
-@app.before_first_request
-def init_rollbar():
-    """init rollbar module"""
-    rollbar.init(
-        # access token
-        rollbar_access_token,
+#rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+#@app.got_first_request
+#def init_rollbar():
+#    """init rollbar module"""
+#    rollbar.init(
+#        # access token
+#        rollbar_access_token,
         # environment name
-        'production',
+#        'production',
         # server root directory, makes tracebacks prettier
-        root=os.path.dirname(os.path.realpath(__file__)),
-        # flask already sets up logging
-        allow_logging_basic_config=False)
+#        root=os.path.dirname(os.path.realpath(__file__)),
+#        # flask already sets up logging
+#        allow_logging_basic_config=False)
 
     # send exceptions from `app` to rollbar, using flask's signal system.
-    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+#    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
 
 @app.route("/api/message_groups", methods=['GET'])
