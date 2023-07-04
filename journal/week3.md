@@ -43,6 +43,10 @@ Update docker-compose.yaml to integrate with AWS Cognito and in your .env file u
 Return to AWS Console, open your User pool, click on APP Integration, scroll down to get your CLIENT ID, Copy the User pool ID from the userpool overview. 
 Your cognito region should be the region you created the User pool in the same with project region.
 
+# Implement API calls to Amazon Coginto for custom login, signup, recovery and forgot password page
+
+The respective directories are frontend-react-js/src/pages/signinpage.js, frontend-react-js/src/pages/signuppage.js, frontend-react-js/src/pages/recoverpage.js frontend-react-js/src/pages/confirmationpage.js
+
 
 
 
