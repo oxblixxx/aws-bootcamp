@@ -31,6 +31,19 @@ Put in preferred pool name and then make the APP TYPE confidential as to nmake i
 
 Review details filled, click create to create the preferred userpool.
 
+---
+# Install and configure Amplify client-side library for Amazon Congito
+
+Prior before now, the client-side has relied on on cookies. open the directory frontend-react-js/src/App.js with your preferred text editor. Include the below code
+[!Create User Pool]()
+
+Update docker-compose.yaml to integrate with AWS Cognito and in your .env file update with the credentiials as well such as your client ID, App Secret
+[!Create User Pool]()
+
+Return to AWS Console, open your User pool, click on APP Integration, scroll down to get your CLIENT ID, Copy the User pool ID from the userpool overview. 
+Your cognito region should be the region you created the User pool in the same with project region.
+
+
 
 
 
