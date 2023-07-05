@@ -212,9 +212,136 @@ Update with this block of code as well
     el_errors = <div className='errors'>{errors}</div>;
   }
 ```
+---
 
+# Show conditional elements and data based on logged in or logged out
+To show conditional elements when logged in or logged out, update the frontend-react-js/src/components/Desktopnavigation.js and frontend-react-js/src/components/desktopsidebar.js
 
+# Desktopnavigation.js
 
+update frontend-react-js/src/components/Desktopnavigation.js to show conditionally information to users when logged in or logged out
+
+```js
+import './DesktopNavigation.css';
+import {ReactComponent as Logo} from './svg/logo.svg';
+import DesktopNavigationLink from '../components/DesktopNavigationLink';
+import CrudButton from '../components/CrudButton';
+import ProfileInfo from '../components/ProfileInfo';
+
+export default function DesktopNavigation(props) {
+
+  let button;
+  let profile;
+  let notificationsLink;
+  let messagesLink;
+  let profileLink;
+  if (props.user) {
+    button = <CrudButton setPopped={props.setPopped} />;
+    profile = <ProfileInfo user={props.user} />;
+    notificationsLink = <DesktopNavigationLink 
+      url="/notifications" 
+      name="Notifications" 
+      handle="notifications" 
+      active={props.active} />;
+    messagesLink = <DesktopNavigationLink 
+      url="/messages"
+      name="Messages"
+      handle="messages" 
+      active={props.active} />
+    profileLink = <DesktopNavigationLink 
+      url="/@andrewbrown" 
+      name="Profile"
+      handle="profile"
+      active={props.active} />
+  }
+
+  return (
+    <nav>
+      <Logo className='logo' />
+      <DesktopNavigationLink url="/" 
+        name="Home"
+        handle="home"
+        active={props.active} />
+      {notificationsLink}
+      {messagesLink}
+      {profileLink}
+      <DesktopNavigationLink url="/#" 
+        name="More" 
+        handle="more"
+        active={props.active} />
+      {button}
+      {profile}
+    </nav>
+  );
+}
+```
+
+## Desktopsidebar
+
+```js
+import './DesktopSidebar.css';
+import Search from '../components/Search';
+import TrendingSection from '../components/TrendingsSection'
+import SuggestedUsersSection from '../components/SuggestedUsersSection'
+import JoinSection from '../components/JoinSection'
+
+export default function DesktopSidebar(props) {
+  const trendings = [
+    {"hashtag": "100DaysOfCloud", "count": 2053 },
+    {"hashtag": "CloudProject", "count": 8253 },
+    {"hashtag": "AWS", "count": 9053 },
+    {"hashtag": "FreeWillyReboot", "count": 7753 }
+  ]
+
+  const users = [
+    {"display_name": "Andrew Brown", "handle": "andrewbrown"}
+  ]
+
+  let trending;
+  if (props.user) {
+    trending = <TrendingSection trendings={trendings} />
+  }
+
+  let suggested;
+  if (props.user) {
+    suggested = <SuggestedUsersSection users={users} />
+  }
+  let join;
+  if (props.user) {
+  } else {
+    join = <JoinSection />
+  }
+
+  return (
+    <section>
+      <Search />
+      {trending}
+      {suggested}
+      {join}
+      <footer>
+        <a href="#">About</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+      </footer>
+    </section>
+  );
+}
+```
+
+finally update profileinfo.js in the components directory
+
+```js
+import { Auth } from 'aws-amplify';
+
+const signOut = async () => {
+  try {
+      await Auth.signOut({ global: true });
+      window.location.href = "/"
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
+```
 
 
 
