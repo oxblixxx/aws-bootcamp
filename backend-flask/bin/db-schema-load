@@ -6,4 +6,12 @@ echo $schema_path
 
 echo "db-schema-load"
 
+if [ "$1" == "production"]; then
+    echo "using production db"
+    URL=$PROD_CONNECTION_URL
+else 
+    echo "using in development db"
+    URL=$CONNECTION_URL
+fi
+
 $CONNECTION_URL cruddur < $schema_path
