@@ -81,7 +81,7 @@ create a bin directory, in the bin directory create files without an extension d
 whereis bash
 ```
 
-open db-create with your favourite text editor, paste the below code
+open db-create with your favourite text editor, paste the below code. Run chmod +x db-create db-schema-load db-drop to make the files executable
 
 ```sh
 #! /usr/bin/bash 
@@ -98,7 +98,7 @@ NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
 $NO_DB_CONNECTION_URL -c "DROP database cruddur;"
 ```
 
-open db-load-schema as well, paste the below code, in the this file, we are update it with a condition to use production environment and development environment, also to pull the path of the schema.sql file
+open db-load-schema as well, paste the below code, in the this file, we are update it with a condition to use production environment and development environment, also to pull the path of the schema.sql file. Meanwhile, the production envirinment needs to be set. Login to the AWS console, open the RDS dashboard, on the previously created db using the AWS CLI. Under connectivity and security copy the endpoint url.
 
 ```sh
 #! /usr/bin/bash 
