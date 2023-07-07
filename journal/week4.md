@@ -59,19 +59,64 @@ create a db named cruddur on the local database with
 create database cruddur;
 ```
 
-There will be repetition so therefore, scripts needs to be created, cd into the backend flask, create a schema folder and file name create.sql. Copy and paste the code below ::UUID implies universaally unique identifier
+A postgresql extension needs to be applied to generate random numbers for users and allocate to them, Copy and paste the code below in a folder db, then create schema.sql ::UUID implies universaally unique identifier
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
+run the schema with the command below, 
 
+```
 psql cruddur < db/schema.sql -h localhost -U postgres
+```
+to avoide passwword prompt, there a various ways to login but we will use the CONNECTION URL METHOD, then create an environment variable for quick access
 
+```
+psql postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}
+psql postgresql://postgres:password@localhost:5432/cruddur"
+```
 
-set a pasql environment variable to login
+create a bin directory, in the bin directory create files without an extension db-create, db-schema-load, db-drop. from anywhere on the terminal run the command 
+```sh
+whereis bash
+```
 
+open db-create with your favourite text editor, paste the below code
 
+```sh
+#! /usr/bin/bash 
+echo "drop create database"
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+$NO_DB_CONNECTION_URL -c "CREATE database cruddur;"
+```
+open db-drop as well, paste the below code
 
+```sh
+#! /usr/bin/bash 
+echo "drop databse"
+NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+$NO_DB_CONNECTION_URL -c "DROP database cruddur;"
+```
 
+open db-load-schema as well, paste the below code, in the this file, we are update it with a condition to use production environment and development environment, also to pull the path of the schema.sql file
+
+```sh
+#! /usr/bin/bash 
+
+schema_path="$(realpath ..)/db/schema.sql"
+echo $schema_path
+echo "db-schema-load"
+
+if [ "$1" == "production"]; then
+    echo "using production db"
+    URL=$PROD_CONNECTION_URL
+else 
+    echo "using in development db"
+    URL=$CONNECTION_URL
+fi
+
+$CONNECTION_URL cruddur < $schema_path
+
+```
 
 
