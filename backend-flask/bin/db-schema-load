@@ -1,0 +1,5 @@
+#! /usr/bin/bash 
+
+echo "db-schema-load"
+
+$CONNECTION_URL cruddur < ../db/schema.sql
