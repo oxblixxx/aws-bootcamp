@@ -65,6 +65,12 @@ There will be repetition so therefore, scripts needs to be created, cd into the 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
+psql cruddur < db/schema.sql -h localhost -U postgres
+
+
+set a pasql environment variable to login
+
+
 
 
 
