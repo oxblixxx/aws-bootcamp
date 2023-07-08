@@ -6,7 +6,7 @@ echo $schema_path
 
 echo "db-schema-load"
 
-if [ "$1" == "production"]; then
+if [ "$1" == "production" ]; then
     echo "using production db"
     URL=$PROD_CONNECTION_URL
 else 
