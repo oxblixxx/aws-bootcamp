@@ -185,5 +185,45 @@ fi
 $CONNECTION_URL cruddur < $seed_path
 ```
 
+You can as well run a a script to compile the db-load, db-seed in a script as well, cd into backend-flask/bin create a file db-load and put in the below command in there
+
+```sh
+#! /usr/bin/bash
+
+-e # stop if it fails at any point
+
+#echo "==== db-setup"
+
+bin_path="$(realpath ..)/bin"
+
+source "$bin_path/db-drop"
+source "$bin_path/db-create"
+source "$bin_path/db-schema-load"
+source "$bin_path/db-seed"
+```
+
+to view actice sessions connected to db, create a file in the backend-flask/bin and open a db-session
+```sh
+#! /usr/bin/bash
+
+if [ "$1" == "prod" ]; then
+    echo "using production db"
+    URL=$PROD_CONNECTION_URL
+else 
+    echo "using in development db"
+    URL=$CONNECTION_URL
+fi
+
+
+NO_URL=$(sed 's/\/cruddur//g' <<<"$URL")
+$NO_URL -c "select pid as process_id, \
+       usename as user,  \
+       datname as db, \
+       client_addr, \
+       application_name as app,\
+       state \
+from pg_stat_activity;"
+```
+
 
 
