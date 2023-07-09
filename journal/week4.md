@@ -225,5 +225,81 @@ $NO_URL -c "select pid as process_id, \
 from pg_stat_activity;"
 ```
 
+update requirements.txt to install for postgres client, update the docker-compose.yaml to set the env for the postgres login. Run pip install -r requirements.txt.
+
+```yaml
+  backend-flask:
+    environment:
+      CONNECTION_URL:  "postgresql://postgres:password@db:5432/cruddur" 
+```
+
+here is the link to the docs  [https://www.psycopg.org/psycopg3/](https://www.psycopg.org/psycopg3/)
+```txt
+psycopg[binary]
+psycopg[pool]
+```
+
+for the Db object and connection opem backend-flask/lib/db.py
+
+```py
+from psycopg_pool import ConnectionPool
+import os
+
+def query_wrap_object(template):
+  sql = f"""
+  (SELECT COALESCE(row_to_json(object_row),'{{}}'::json) FROM (
+  {template}
+  ) object_row);
+  """
+  return sql
+
+def query_wrap_array(template):
+  sql = f"""
+  (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
+  {template}
+  ) array_row);
+  """
+  return sql
+
+connection_url = os.getenv("CONNECTION_URL")
+pool = ConnectionPool(connection_url)
+```
+
+update services/home_activities.py with the api call
+
+```py
+sql = query_wrap_array("""
+      SELECT
+        activities.uuid,
+        users.display_name,
+        users.handle,
+        activities.message,
+        activities.replies_count,
+        activities.reposts_count,
+        activities.likes_count,
+        activities.reply_to_activity_uuid,
+        activities.expires_at,
+        activities.created_at
+      FROM public.activities
+      LEFT JOIN public.users ON users.uuid = activities.user_uuid
+      ORDER BY activities.created_at DESC
+    """)
+    print("SQL--------------")
+    print(sql)
+    print("SQL--------------")
+    with pool.connection() as conn:
+      with conn.cursor() as cur:
+        cur.execute(sql)
+        # this will return a tuple
+        # the first field being the data
+        json = cur.fetchone()
+    print("-1----")
+    print(json[0])
+    return json[0]
+    return results
+```
+
+
+
 
 
