@@ -1,2 +1,10 @@
 #! /usr/bin/bash 
-$CONNECTION_URL
+if [ "$1" == "prod" ]; then
+    echo "using production db"
+    URL=$PROD_CONNECTION_URL
+    $URL
+else 
+    echo "using in development db"
+    URL=$CONNECTION_URL
+    $URL
+fi
