@@ -118,7 +118,7 @@ fi
 $CONNECTION_URL cruddur < $schema_path
 
 ```
-cd into the schema directory backend-flask/db, update the schema.sql with an editor with tables of activities and user. 
+cd into the schema directory backend-flask/bin, update the schema.sql with an editor with tables of activities and user. 
 
 ```sql
 DROP TABLE IF EXISTS public.users;
@@ -128,7 +128,7 @@ DROP TABLE IF EXISTS public.activities;
 CREATE TABLE public.users (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   display_name text,
-  handle text
+  handle text,
   cognito_user_id text,
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
@@ -136,6 +136,7 @@ CREATE TABLE public.users (
 ```sql
 CREATE TABLE public.activities (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_uuid UUID NOT NULL,
   message text NOT NULL,
   replies_count integer DEFAULT 0,
   reposts_count integer DEFAULT 0,
@@ -144,6 +145,44 @@ CREATE TABLE public.activities (
   expires_at TIMESTAMP,
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
+```
+
+in the current directory create a seed file then cd into backend-flask/db, create a script to run to load the seed file as well, ensure to change the file permssion as well
+
+```sql
+-- this file was manually created
+INSERT INTO public.users (display_name, handle, cognito_user_id)
+VALUES
+  ('Andrew Brown', 'andrewbrown' ,'MOCK'),
+  ('Andrew Bayko', 'bayko' ,'MOCK');
+
+INSERT INTO public.activities (user_uuid, message, expires_at)
+VALUES
+  (
+    (SELECT uuid from public.users WHERE users.handle = 'andrewbrown' LIMIT 1),
+    'This was imported as seed data!',
+    current_timestamp + interval '10 day'
+  )
+```
+
+```sh
+#! /usr/bin/bash 
+
+seed_path="$(realpath ..)/db/seed.sql"
+
+echo $seed_path
+
+echo "db-seed"
+
+if [ "$1" == "production" ]; then
+    echo "using production db"
+    URL=$PROD_CONNECTION_URL
+else 
+    echo "using in development db"
+    URL=$CONNECTION_URL
+fi
+
+$CONNECTION_URL cruddur < $seed_path
 ```
 
 
