@@ -299,7 +299,24 @@ sql = query_wrap_array("""
     return results
 ```
 
+# CONNECT TO DB
+to connect to db we need to allow inbound rule from gitpod IP address. Run the command 
 
+```sh
+echo GITPOD_IP=$(curl ifconfig.me)
+```
+to automatically update the gitpod IP on relaunch, login to your console, fetch the security group ID and security rule group ID attached to the RDS. Then set the env variables. Description should be set as GITPOD
 
+```sh
+export DB_SG_ID="sg-08895646d8830b0eb"
+gp env DB_SG_ID="sg-08895646d8830b0eb"
+export DB_SG_RULE_ID="sgr-0eab2429a165ea98c"
+gp env DB_SG_RULE_ID="sgr-0eab2429a165ea98c"
+```
 
+```sh
+aws ec2 modify-security-group-rules \
+    --group-id $DB_SG_ID \
+    --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={Description=GITPOD,IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32}"
+```
 
