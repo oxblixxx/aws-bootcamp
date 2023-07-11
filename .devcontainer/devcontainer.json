@@ -3,7 +3,8 @@
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/aws-cli:1": {}
+		"ghcr.io/devcontainers/features/aws-cli:1": {},
+		"ghcr.io/devcontainers/features/terraform:1": {}
 	},
 	"remoteEnv": {
 		"AWS_CLI_AUTO_PROMPT": "on-partial"
@@ -13,7 +14,9 @@
 			"extensions": [
 				"ms-azuretools.vscode-docker",
 				"ms-python.python",
-				"vscodevim.vim"
+				"vscodevim.vim",
+				"HashiCorp.terraform",
+                "ms-azuretools.vscode-azureterraform"
 			],
 			"settings": {
 				"terminal.integrated.fontSize": 20,
@@ -21,10 +24,12 @@
 				"workbench.colorTheme": "Default Dark+ Experimental"
 			}
 		}
+	},
 		
+		
+	"postCreateCommand": "sudo apt update && sudo apt install -y curl gnupg2 lsb-release",
+	"postStartCommand": "cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js && npm install && npm install --save @opentelemetry/api @opentelemetry/sdk-trace-web @opentelemetry/exporter-trace-otlp-http @opentelemetry/context-zone @opentelemetry/instrumentation @opentelemetry/instrumentation-xml-http-request @opentelemetry/instrumentation-fetch aws-amplify"
 
-
-	}
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
