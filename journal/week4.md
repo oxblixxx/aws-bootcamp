@@ -378,5 +378,6 @@ def lambda_handler(event, context):
           print('Database connection closed.')
     return event
 ```
+then add a new layer, specify ARN. We are using a library names pyscopg -- here is a link to the documentation ![psycopg](https://github.com/jetbridge/psycopg2-lambda-layer). Choose the one specific to your location and version. 
 
 
