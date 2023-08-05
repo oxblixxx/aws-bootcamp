@@ -380,4 +380,6 @@ def lambda_handler(event, context):
 ```
 then add a new layer, specify ARN. We are using a library names pyscopg -- here is a link to the documentation ![psycopg](https://github.com/jetbridge/psycopg2-lambda-layer). Choose the one specific to your location and version. 
 
+proceed to cognito to apply the lamda triggers under user pool properties, choose post confirmation, the previously created lamda, then create lamda.
+
 
