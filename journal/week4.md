@@ -378,6 +378,9 @@ def lambda_handler(event, context):
           print('Database connection closed.')
     return event
 ```
+add environment variable for your prod db in lamda
+
+then add the vpc where the database is located, attach at least 2 subnets. Incase of this error while creating resolve it by
 then add a new layer, specify ARN. We are using a library names pyscopg -- here is a link to the documentation ![psycopg](https://github.com/jetbridge/psycopg2-lambda-layer). Choose the one specific to your location and version. 
 
 proceed to cognito to apply the lamda triggers under user pool properties, choose post confirmation, the previously created lamda, then create lamda.
