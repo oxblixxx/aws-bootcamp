@@ -380,7 +380,17 @@ def lambda_handler(event, context):
 ```
 add environment variable for your prod db in lamda
 
-then add the vpc where the database is located, attach at least 2 subnets. Incase of this error while creating resolve it by
+then add the vpc where the database is located, attach at least 2 subnets. Incase of this error "The provided execution role does not have permissions to call CreateNetworkInterface on EC2" while creating resolve it by adding a policy, click the rolename 
+
+```
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:CreateNetworkInterface",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeInstances",
+        "ec2:AttachNetworkInterface"
+
+```
+
 then add a new layer, specify ARN. We are using a library names pyscopg -- here is a link to the documentation ![psycopg](https://github.com/jetbridge/psycopg2-lambda-layer). Choose the one specific to your location and version. 
 
 proceed to cognito to apply the lamda triggers under user pool properties, choose post confirmation, the previously created lamda, then create lamda.
