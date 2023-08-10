@@ -127,9 +127,10 @@ DROP TABLE IF EXISTS public.activities;
 ```sql
 CREATE TABLE public.users (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  display_name text,
-  handle text,
-  cognito_user_id text,
+  display_name text NOT NULL,
+  handle text NOT NULL,
+  email text NOT NULL,
+  cognito_user_id text NOT NULL,
   created_at TIMESTAMP default current_timestamp NOT NULL
 );
 ```
@@ -346,7 +347,6 @@ def lambda_handler(event, context):
     user_handle        = user['preferred_username']
     user_cognito_id    = user['sub']
     try:
-      print('entered-try')
       sql = f"""
          INSERT INTO public.users (
           display_name, 
@@ -354,19 +354,18 @@ def lambda_handler(event, context):
           handle, 
           cognito_user_id
           ) 
-        VALUES(%s,%s,%s,%s)
+        VALUES(
+        '{user_display_name}',
+        '{user_email}',
+        '{user_handle}',
+        '{user_cognito_id}'
+        )
       """
       print('SQL Statement ----')
       print(sql)
-      conn = psycopg2.connect(os.getenv('CONNECTION_URL'))
+      conn = psycopg2.connect(os.getenv('PROD_CONNECTION_URL'))
       cur = conn.cursor()
-      params = [
-        user_display_name,
-        user_email,
-        user_handle,
-        user_cognito_id
-      ]
-      cur.execute(sql,*params)
+      cur.execute(sql)
       conn.commit() 
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -390,9 +389,18 @@ then add the vpc where the database is located, attach at least 2 subnets. Incas
         "ec2:AttachNetworkInterface"
 
 ```
+ensure to attach the policy otherwise you get an error while attaching the VPC.
 
 then add a new layer, specify ARN. We are using a library names pyscopg -- here is a link to the documentation ![psycopg](https://github.com/jetbridge/psycopg2-lambda-layer). Choose the one specific to your location and version. 
 
 proceed to cognito to apply the lamda triggers under user pool properties, choose post confirmation, the previously created lamda, then create lamda.
+
+check Cloudwatch from the lamda page incase of any errors.
+
+login to the production database to see if the signup information is succesfully added, run
+```sql
+select * from users;
+```
+
 
 
