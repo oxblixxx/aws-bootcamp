@@ -15,4 +15,4 @@ else
     URL=$CONNECTION_URL
 fi
 
-$CONNECTION_URL cruddur < $schema_path
+$PROD_CONNECTION_URL cruddur < $schema_path
