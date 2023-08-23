@@ -670,5 +670,5 @@ class HomeActivities:
     results = db.query_array_json(sql)
     return results
 ```
-
+## I got this error of "error connecting in 'pool-1': connection failed: Connection refused Is the server running on that host and accepting TCP/IP connections" then I checked on this stackoverflow [](https://stackoverflow.com/questions/37307346/is-the-server-running-on-host-localhost-1-and-accepting-tcp-ip-connections). I reinstalled postgresql and ran the command "sudo service postgresql start" which then started postgresql, proceeded to add the command to my gitpod.yml
 
