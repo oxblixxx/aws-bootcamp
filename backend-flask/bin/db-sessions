@@ -10,7 +10,7 @@ fi
 
 
 NO_URL=$(sed 's/\/cruddur//g' <<<"$URL")
-$NO_URL -c "select pid as process_id, \
+psql $NO_URL -c "select pid as process_id, \
        usename as user,  \
        datname as db, \
        client_addr, \
